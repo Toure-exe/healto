@@ -4,10 +4,6 @@ spring:
       client:
         registration:
           google:
-
-            scope:
-              - email
-              - profile
         provider:
           google:
             authorization-uri: https://accounts.google.com/o/oauth2/v2/auth
