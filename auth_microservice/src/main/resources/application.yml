@@ -4,8 +4,7 @@ spring:
       client:
         registration:
           google:
-            client-id: 600543089869-pajvk293af6pas33nrmqo7g4157mkqlr.apps.googleusercontent.com
-            client-secret: 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
+
             scope:
               - email
               - profile
