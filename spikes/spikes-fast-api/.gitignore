@@ -1,0 +1,33 @@
+# Ignora l'ambiente virtuale
+venv/
+
+# File temporanei di Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# File di log
+*.log
+
+# File temporanei dell'editor
+*.swp
+*.swo
+*~
+
+# File di configurazione IDE comuni
+.vscode/
+.idea/
+*.iml
+
+# File di sistema
+.DS_Store
+Thumbs.db
+
+# Cache pip
+pip-wheel-metadata/
+*.egg-info/
+dist/
+build/
+
+# Database temporanei
+*.sqlite3

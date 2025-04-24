@@ -5,7 +5,6 @@ import neurokit2 as nk
 from sklearn.preprocessing import MinMaxScaler
 
 def high_pass_filter(original_signal, cutoff_frequency=0.5, sampling_rate=360, order=3):
-  print("2")
   """
   Applies a high-pass Butterworth filter to the input signal.
 
@@ -26,7 +25,6 @@ def high_pass_filter(original_signal, cutoff_frequency=0.5, sampling_rate=360, o
 
 
 def low_pass_filter(original_signal, cutoff_freq=150, sampling_rate=360, order=3):
-  print("3")
   """
   Applies a low-pass Butterworth filter to the input signal.
 
@@ -46,7 +44,6 @@ def low_pass_filter(original_signal, cutoff_freq=150, sampling_rate=360, order=3
   return filtered_data
 
 def notch_filter(signal, notch_frequency=60, quality_factor=30, sampling_rate=360):
-  print("4")
   """
   Applies a notch filter to remove a specific frequency from the input signal.
 
@@ -68,7 +65,6 @@ def notch_filter(signal, notch_frequency=60, quality_factor=30, sampling_rate=36
 
 
 def signal_filtering(raw_signal):
-  print("5")
   """
   Applies a series of filters (high-pass, notch, and low-pass) to a raw ECG signal.
 
@@ -87,7 +83,6 @@ def signal_filtering(raw_signal):
 
 def segmentation_process(signal, sampling_rate=360, window_size=0.6,
                          method="neurokit", correct_artifacts=True):
-    print("6")
     """
     Segments a pre-filtered ECG signal into fixed-length windows centered on R-peaks.
 
@@ -109,22 +104,18 @@ def segmentation_process(signal, sampling_rate=360, window_size=0.6,
 
     half_window = int((window_size * sampling_rate) // 2)
     segments = []
-    print("6 for")
     for r_index in rpeaks:
         start = r_index - half_window
         end = r_index + half_window
         if start >= 0 and end <= len(signal):
             segment = signal[start:end]
             segments.append(segment)
-        else:
-           print("ENTROOO")
     
     print(f"num segmenti: {len(segments)}")
 
     return segments
 
 def normalization_process(raw_segments, scaler):
-  print("7")
   """
   Normalizes each segment of the raw ECG signal using a specified scaler.
 
@@ -144,12 +135,9 @@ def normalization_process(raw_segments, scaler):
   return normalized_beats
 
 def preprocessing(patient_record):
-   print("1")
    scaler = MinMaxScaler(feature_range=(0, 1))
    sampling_rate = 360
-   print("1 filter")
    filetred_first_lead_signal = signal_filtering(patient_record.p_signal[:, 0]) #first lead
-   print("1 filer after")
    first_lead_raw_segments = segmentation_process(filetred_first_lead_signal, sampling_rate)
    first_lead_segments = normalization_process(first_lead_raw_segments, scaler)
 
