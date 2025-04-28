@@ -1,9 +1,9 @@
 package com.example.auth_microservice.services;
 
 import com.example.auth_microservice.DTO.LoginRequestDTO;
-import com.example.auth_microservice.DTO.Patient;
+import com.example.auth_microservice.DTO.User;
 import com.example.auth_microservice.DTO.RegisterRequestDTO;
-import com.example.auth_microservice.repository.PatientRepository;
+import com.example.auth_microservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,25 +13,26 @@ import java.util.Optional;
 public class AuthService {
 
     @Autowired
-    private PatientRepository patientRepository;
+    private UserRepository userRepository;
     @Autowired
     private JwtService jwtService;
 
     public boolean insertUser(RegisterRequestDTO dto) {
         boolean result = false;
 
-        if (!patientRepository.existsByEmail(dto.getEmail())) {
-            if(patientRepository.findByFiscalCode(dto.getFiscalCode()).isEmpty()) {
+        if (!userRepository.existsByEmail(dto.getEmail())) {
+            if(userRepository.findByFiscalCode(dto.getFiscalCode()).isEmpty()) {
 
-                Patient patient = new Patient();
-                patient.setEmail(dto.getEmail());
-                patient.setPassword(dto.getPassword());
-                patient.setName(dto.getName());
-                patient.setSurname(dto.getSurname());
-                patient.setFiscalCode(dto.getFiscalCode());
-                patient.setBirthDate(dto.getBirthDate());
+                User user = new User();
+                user.setEmail(dto.getEmail());
+                user.setPassword(dto.getPassword());
+                user.setName(dto.getName());
+                user.setSurname(dto.getSurname());
+                user.setFiscalCode(dto.getFiscalCode());
+                user.setBirthDate(dto.getBirthDate());
+                user.setRole(dto.getRole());
 
-                Patient saved = patientRepository.save(patient);
+                User saved = userRepository.save(user);
                 // Verifica inserimento riuscito
                 if (saved.getFiscalCode().equals(dto.getFiscalCode())) {
                     result = true;
@@ -45,13 +46,13 @@ public class AuthService {
 
     public String login(LoginRequestDTO dto) {
         String token = null;
-        Optional<Patient> userData = patientRepository.findByEmail(dto.getEmail());
+        Optional<User> userData = userRepository.findByEmail(dto.getEmail());
 
         if (userData.isPresent()) {
-            Patient user = userData.get();
+            User user = userData.get();
 
             if (user.getPassword().equals(dto.getPassword())) {
-                token = jwtService.generateToken((patientRepository.findByEmail(dto.getEmail())).get());
+                token = jwtService.generateToken((userRepository.findByEmail(dto.getEmail())).get());
             }
 
         }

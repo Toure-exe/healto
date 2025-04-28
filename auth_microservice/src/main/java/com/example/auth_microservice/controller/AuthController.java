@@ -1,6 +1,7 @@
 package com.example.auth_microservice.controller;
 
 import ch.qos.logback.core.model.Model;
+import com.example.auth_microservice.DTO.DoctorDTO;
 import com.example.auth_microservice.DTO.LoginRequestDTO;
 import com.example.auth_microservice.DTO.RegisterRequestDTO;
 import com.example.auth_microservice.services.AuthService;
@@ -53,5 +54,10 @@ public class AuthController {
     public String loginSuccess(@RequestParam("token") String token) {
         System.out.println("---> TOKEN: "+token);
         return token;
+    }
+
+    @RequestMapping("/get-doctor-list")
+    public ResponseEntity<DoctorDTO> getDoctorList(){
+        return null;
     }
 }

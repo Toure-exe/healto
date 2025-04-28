@@ -16,13 +16,13 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Patient")
-public class Patient {
-
-    @Id
-    private String fiscalCode; // puoi usare anche @GeneratedValue se non è stringa fissa
+@Table(name = "User")
+public class User {
 
     @Column(unique = true, nullable = false)
+    private String fiscalCode; // puoi usare anche @GeneratedValue se non è stringa fissa
+
+    @Id
     private String email;
 
     @Column(nullable = false)
@@ -33,6 +33,9 @@ public class Patient {
 
     @Column(nullable = false)
     private String surname;
+
+    @Column(nullable = false)
+    private String Role;
 
     @Setter
     @Getter

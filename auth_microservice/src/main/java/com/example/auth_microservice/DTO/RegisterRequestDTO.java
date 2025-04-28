@@ -14,6 +14,7 @@ public class RegisterRequestDTO {
     private String fiscalCode;
     private String password;
     private String name;
+    private String role;
     private String surname;
     @Setter
     @JsonFormat(pattern = "dd/MM/yyyy")
