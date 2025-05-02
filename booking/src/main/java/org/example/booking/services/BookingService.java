@@ -16,17 +16,25 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public List<DateHoursDTO> getBookingsByDoctorId(String email) {
+    public List<DateHoursDTO> getBookingsById(String email, String role) {
         List<Booking> bookings = new ArrayList<>();
         List<DateHoursDTO> hoursList = new ArrayList<>();
         if(email != null) {
-            bookings = bookingRepository.findByDoctorEmail(email);
-        }
-        System.out.println(bookings);
+            switch (role) {
+                case "doctor":
+                    bookings = bookingRepository.findByDoctorEmail(email);
+                    break;
+                case "patient":
+                    bookings = bookingRepository.findByPatientEmail(email);
+                    break;
+            }
 
-        for(Booking booking : bookings) {
-            hoursList.add(new DateHoursDTO(booking.getBookingDate(), booking.getBookingHour()));
+            for(Booking booking : bookings) {
+                hoursList.add(new DateHoursDTO(booking.getBookingDate(), booking.getBookingHour(), booking.getDoctorEmail()));
+            }
+
         }
+
 
         return hoursList;
     }

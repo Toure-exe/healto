@@ -42,6 +42,7 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
                     newUser.setEmail(email);
                     newUser.setName(name);
                     newUser.setSurname(surname);
+                    newUser.setRole("patient");
                     newUser.setPassword("oauth2_google"); // oppure null
                     newUser.setFiscalCode("google"); // dummy unique ID
                     newUser.setBirthDate(LocalDate.parse("2025-01-01"));

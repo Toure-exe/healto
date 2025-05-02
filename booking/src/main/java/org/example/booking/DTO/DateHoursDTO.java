@@ -15,4 +15,5 @@ import java.time.LocalDate;
 public class DateHoursDTO {
     private LocalDate date;
     private String hours;
+    private String doctorEmail;
 }

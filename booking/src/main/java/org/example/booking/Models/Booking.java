@@ -31,6 +31,9 @@ public class Booking {
     @Column(nullable = false)
     private String bookingHour;
 
+    @Column(nullable = false)
+    private boolean isAcceptedByDoctor;
+
     @Setter
     @Getter
     @Column(nullable = false)

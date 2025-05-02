@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.util.List;
 
 @Controller
 public class AuthController {
@@ -57,7 +58,11 @@ public class AuthController {
     }
 
     @RequestMapping("/get-doctor-list")
-    public ResponseEntity<DoctorDTO> getDoctorList(){
-        return null;
+    public ResponseEntity<List<DoctorDTO>> getDoctorList(){
+       List<DoctorDTO> doctors = authServices.getDoctors();
+       if(doctors != null && !doctors.isEmpty())
+           return  ResponseEntity.ok(doctors);
+       else
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 }

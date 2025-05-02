@@ -2,15 +2,12 @@ package org.example.booking.controllers;
 
 import org.example.booking.DTO.BookingDTO;
 import org.example.booking.DTO.DateHoursDTO;
-import org.example.booking.Models.Booking;
 import org.example.booking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -27,7 +24,7 @@ public class BookingController {
         if(email.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(bookingService.getBookingsByDoctorId(email));
+        return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor"));
     }
 
     @RequestMapping("/insert-booking") //dopo controllare se il booking inserito non "esiste già"
@@ -42,6 +39,13 @@ public class BookingController {
         }
     }
 
-    //getBookingListByPatientId
-    //getBookingListByDoctorId
+    @GetMapping("/get-patient-booking-list")
+    public ResponseEntity<List<DateHoursDTO>> getPatientBookingsById(@RequestParam("email") String email){
+        System.out.println(email);
+        if(email.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        return ResponseEntity.ok(bookingService.getBookingsById(email, "patient"));
+    }
+
 }

@@ -35,7 +35,7 @@ public class User {
     private String surname;
 
     @Column(nullable = false)
-    private String Role;
+    private String role;
 
     @Setter
     @Getter
