@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
+/*
+* DA AGGIORNARE: METTERE ANCHE L'ID DEL BOOKING, L'EMAIL, IL NOME E IL COGNOME DEL PAZIENTE
+ */
 
 @Getter
 @Setter
