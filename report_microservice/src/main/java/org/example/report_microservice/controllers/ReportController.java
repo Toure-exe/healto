@@ -5,6 +5,7 @@ import org.example.report_microservice.models.Report;
 import org.example.report_microservice.services.ReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,8 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
-    @PostMapping(value = "/insert-report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PreAuthorize("hasRole('DOCTOR')")
+    @PostMapping(value = "/doctor/insert-report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> insertReport(@RequestPart("reportAndTherapyDTO") ReportAndTherapyDTO dto,
                                                @RequestPart(value = "file", required = false) MultipartFile file) {
         String arrythmiaResult = null;
@@ -51,8 +53,25 @@ public class ReportController {
         }
     }
 
-    @RequestMapping("/get-reports-by-email")
-    public ResponseEntity<List<ReportAndTherapyDTO>> getReportsByEmail(@RequestParam("email") String email, @RequestParam("role") String role) {
+    @PreAuthorize("hasRole('DOCTOR')")
+    @RequestMapping("/doctor/get-reports-by-email")
+    public ResponseEntity<List<ReportAndTherapyDTO>> getDoctorReportsByEmail(@RequestParam("email") String email, @RequestParam("role") String role) {
+        if(!role.equals("doctor")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+        List<ReportAndTherapyDTO> reports = reportService.getReportsByEmail(email, role);
+        if (reports != null)
+            return ResponseEntity.ok(reports);
+        else
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    @PreAuthorize("hasRole('PATIENT')")
+    @RequestMapping("/patient/get-reports-by-email")
+    public ResponseEntity<List<ReportAndTherapyDTO>> getPatientReportsByEmail(@RequestParam("email") String email, @RequestParam("role") String role) {
+        if(!role.equals("patient")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
         List<ReportAndTherapyDTO> reports = reportService.getReportsByEmail(email, role);
         if (reports != null)
             return ResponseEntity.ok(reports);

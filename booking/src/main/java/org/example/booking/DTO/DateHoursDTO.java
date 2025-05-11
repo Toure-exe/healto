@@ -19,4 +19,6 @@ public class DateHoursDTO {
     private LocalDate date;
     private String hours;
     private String doctorEmail;
+    private int bookingId;
+    private String patientEmail;
 }

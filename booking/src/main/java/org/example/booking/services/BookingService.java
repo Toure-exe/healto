@@ -30,7 +30,7 @@ public class BookingService {
             }
 
             for(Booking booking : bookings) {
-                hoursList.add(new DateHoursDTO(booking.getBookingDate(), booking.getBookingHour(), booking.getDoctorEmail()));
+                hoursList.add(new DateHoursDTO(booking.getBookingDate(), booking.getBookingHour(), booking.getDoctorEmail(),booking.getBookingId(),booking.getPatientEmail()));
             }
 
         }

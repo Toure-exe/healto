@@ -6,6 +6,7 @@ import org.example.booking.services.BookingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +19,8 @@ public class BookingController {
     private BookingService bookingService;
 
 
-    @GetMapping("/get-doctor-booking-list")
+    @PreAuthorize("hasRole('DOCTOR')")
+    @GetMapping("/doctor/get-doctor-booking-list")
     public ResponseEntity<List<DateHoursDTO>> getDoctorBookingsById(@RequestParam("email") String email){
         System.out.println(email);
         if(email.isEmpty()){
@@ -27,7 +29,8 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor"));
     }
 
-    @RequestMapping("/insert-booking") //dopo controllare se il booking inserito non "esiste già"
+    @PreAuthorize("hasRole('PATIENT')")
+    @RequestMapping("/patient/insert-booking") //dopo controllare se il booking inserito non "esiste già"
     public ResponseEntity<String> insertBooking(@RequestBody BookingDTO bookingDTO){
 
         boolean success = bookingService.insertBooking(bookingDTO);
@@ -39,7 +42,8 @@ public class BookingController {
         }
     }
 
-    @GetMapping("/get-patient-booking-list")
+    @PreAuthorize("hasRole('PATIENT')")
+    @GetMapping("/patient/get-patient-booking-list")
     public ResponseEntity<List<DateHoursDTO>> getPatientBookingsById(@RequestParam("email") String email){
         System.out.println(email);
         if(email.isEmpty()){
