@@ -1,22 +1,19 @@
 package com.example.auth_microservice.controller;
 
 import ch.qos.logback.core.model.Model;
-import com.example.auth_microservice.DTO.DoctorDTO;
-import com.example.auth_microservice.DTO.LoginRequestDTO;
-import com.example.auth_microservice.DTO.RegisterRequestDTO;
+import com.example.auth_microservice.DTO.*;
 import com.example.auth_microservice.services.AuthService;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @Controller
 public class AuthController {
 
@@ -24,19 +21,20 @@ public class AuthController {
     private AuthService authServices;
 
     @RequestMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequestDTO loginRequestDTO) {
-        ResponseEntity<String> response = null;
-        String token = authServices.login(loginRequestDTO);
-        if (token != null)
-            response = ResponseEntity.status(HttpStatus.OK).body(token);
+    public ResponseEntity<LoggedUserDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
+        ResponseEntity<LoggedUserDTO> response = null;
+        LoggedUserDTO result = authServices.login(loginRequestDTO);
+        if (result != null)
+            response = ResponseEntity.status(HttpStatus.OK).body(result);
         else
-            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized");
+            response = ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
 
         return response;
     }
 
-    @RequestMapping("/login/sso-ggogle")
+    @RequestMapping("/login/sso-google")
     public void loginGoogle(HttpServletResponse response) throws IOException {
+        System.out.println("sso-ggogle<<<");
         response.sendRedirect("/oauth2/authorization/google");
     }
 
@@ -52,9 +50,9 @@ public class AuthController {
     }
 
     @RequestMapping("/login-success")
-    public String loginSuccess(@RequestParam("token") String token) {
+    public ResponseEntity<String> loginSuccess(@RequestParam("token") String token) {
         System.out.println("---> TOKEN: "+token);
-        return token;
+        return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
     @RequestMapping("/get-doctor-list")
@@ -64,5 +62,29 @@ public class AuthController {
            return  ResponseEntity.ok(doctors);
        else
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    @PutMapping("/user")
+    public ResponseEntity<String> updateUser(@RequestBody UserDTO userDTO) {
+        ResponseEntity<String> response = null;
+        if(userDTO == null ){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+        }else{
+            boolean result = authServices.updateUser(userDTO);
+            if(result)
+                return  ResponseEntity.status(HttpStatus.OK).body("success");
+            else
+                return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
+    }
+
+    @GetMapping("/user")
+    public ResponseEntity<UserDTO> getUser(@RequestParam("email") String email) {
+        System.out.println("--->ENTROOOO  email: "+email);
+        UserDTO result = authServices.getUserByEmail(email);
+        if(result != null)
+            return  ResponseEntity.status(HttpStatus.OK).body(result);
+        else
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
     }
 }

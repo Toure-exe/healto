@@ -1,10 +1,8 @@
 package com.example.auth_microservice.services;
 
-import com.example.auth_microservice.DTO.DoctorDTO;
-import com.example.auth_microservice.DTO.LoginRequestDTO;
-import com.example.auth_microservice.DTO.User;
-import com.example.auth_microservice.DTO.RegisterRequestDTO;
+import com.example.auth_microservice.DTO.*;
 import com.example.auth_microservice.repository.UserRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,19 +45,23 @@ public class AuthService {
         return result;
     }
 
-    public String login(LoginRequestDTO dto) {
-        String token = null;
+    public LoggedUserDTO login(LoginRequestDTO dto) {
+        LoggedUserDTO result = new LoggedUserDTO();
         Optional<User> userData = userRepository.findByEmail(dto.getEmail());
 
         if (userData.isPresent()) {
             User user = userData.get();
+            result.setEmail(user.getEmail());
+            result.setFirstName(user.getName());
+            result.setLastName(user.getSurname());
+            result.setRole(user.getRole());
 
             if (user.getPassword().equals(dto.getPassword())) {
-                token = jwtService.generateToken((userRepository.findByEmail(dto.getEmail())).get());
+                result.setToken(jwtService.generateToken((userRepository.findByEmail(dto.getEmail())).get()));
             }
 
         }
-        return token;
+        return result;
     }
 
     public List<DoctorDTO> getDoctors() {
@@ -73,5 +75,43 @@ public class AuthService {
             doctorsList.add(doctorDTO);
         }
         return doctorsList;
+    }
+
+    public UserDTO getUserByEmail(String email) {
+        UserDTO userDTO = new UserDTO();
+        Optional<User> userData = userRepository.findByEmail(email);
+        if (userData.isPresent()) {
+            User user = userData.get();
+            userDTO.setEmail(user.getEmail());
+            userDTO.setName(user.getName());
+            userDTO.setSurname(user.getSurname());
+            userDTO.setFiscalCode(user.getFiscalCode());
+            userDTO.setBirthDate(user.getBirthDate());
+            userDTO.setRole(user.getRole());
+        }
+
+        return userDTO;
+    }
+
+    @Transactional
+    public boolean updateUser(UserDTO dto) {
+        Optional<User> existingUserOptional = userRepository.findById(dto.getEmail());
+
+        if (existingUserOptional.isPresent()) {
+            User existingUser = existingUserOptional.get();
+
+            existingUser.setFiscalCode(dto.getFiscalCode());
+            //existingUser.setPassword(dto.getPassword());
+            existingUser.setName(dto.getName());
+            existingUser.setSurname(dto.getSurname());
+            existingUser.setRole(dto.getRole());
+            existingUser.setBirthDate(dto.getBirthDate());
+
+            userRepository.save(existingUser);
+            return true;
+        } else {
+
+            return false;
+        }
     }
 }

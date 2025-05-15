@@ -9,8 +9,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/booking")
 public class BookingController {
@@ -19,14 +21,14 @@ public class BookingController {
     private BookingService bookingService;
 
 
-    @PreAuthorize("hasRole('DOCTOR')")
-    @GetMapping("/doctor/get-doctor-booking-list")
-    public ResponseEntity<List<DateHoursDTO>> getDoctorBookingsById(@RequestParam("email") String email){
+
+    @GetMapping(value = "/get-doctor-booking-list")
+    public ResponseEntity<List<DateHoursDTO>> getDoctorBookingsById(@RequestParam("email") String email, @RequestParam("date") LocalDate date) {
         System.out.println(email);
         if(email.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor"));
+        return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor", date));
     }
 
     @PreAuthorize("hasRole('PATIENT')")
@@ -49,7 +51,7 @@ public class BookingController {
         if(email.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(bookingService.getBookingsById(email, "patient"));
+        return ResponseEntity.ok(bookingService.getBookingsById(email, "patient",null));
     }
 
 }
