@@ -43,9 +43,9 @@ export default function UserHomePage() {
                            <Link to="/booking" > <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                                 Prenota visita
                             </button></Link>
-                            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
+                            <Link to="/medical-history"><button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Storico medico
-                            </button>
+                            </button></Link>
                             <Link to="/booking-history"> <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Storico visite
                             </button></Link>
@@ -59,12 +59,12 @@ export default function UserHomePage() {
                             <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                                 Inserisci report
                             </button>
-                            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
+                            <Link to="/medical-history"> <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Storico report
-                            </button>
-                            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
+                            </button> </Link>
+                            <Link to="/doctor-appointments"><button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Storico visite
-                            </button>
+                            </button></Link>
                         </>
                     )}
                 </div>

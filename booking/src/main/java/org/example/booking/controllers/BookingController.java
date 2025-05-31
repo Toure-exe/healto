@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
@@ -23,12 +24,15 @@ public class BookingController {
 
 
     @GetMapping(value = "/get-doctor-booking-list")
-    public ResponseEntity<List<DateHoursDTO>> getDoctorBookingsById(@RequestParam("email") String email, @RequestParam("date") LocalDate date) {
-        System.out.println(email);
+    public ResponseEntity<List<DateHoursDTO>> getDoctorBookingsById(@RequestParam("email") String email, @RequestParam(required = false) Optional<LocalDate> date) {
+        LocalDate actualDate = null;
         if(email.isEmpty()){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
-        return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor", date));
+        if(date.isPresent())
+            actualDate = date.get();
+
+        return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor", actualDate));
     }
 
     @PreAuthorize("hasRole('PATIENT')")
@@ -52,6 +56,19 @@ public class BookingController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         return ResponseEntity.ok(bookingService.getBookingsById(email, "patient",null));
+    }
+
+    @PreAuthorize("hasRole('DOCTOR')")
+    @PutMapping("/doctor/confirm-booking")
+    public ResponseEntity<String> setBookingAsAcceptedByDoctor(@RequestBody int bookingId){
+        if(bookingId <= 0){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        boolean result = bookingService.setBookingAsAccepted(bookingId);
+        if (result)
+            return ResponseEntity.ok("stato del booking modificato con successo");
+        else
+            return ResponseEntity.notFound().build();
     }
 
 }

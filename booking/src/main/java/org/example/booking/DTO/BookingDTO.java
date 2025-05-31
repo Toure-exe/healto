@@ -17,4 +17,5 @@ public class BookingDTO {
     private String patientEmail;
     private LocalDate date;
     private String hours;
+    private boolean isAcceptedByDoctor;
 }

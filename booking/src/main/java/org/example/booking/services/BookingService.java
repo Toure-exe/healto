@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class BookingService {
@@ -40,14 +41,15 @@ public class BookingService {
                                 booking.getBookingHour(),
                                 booking.getDoctorEmail(),
                                 booking.getBookingId(),
-                                booking.getPatientEmail()
+                                booking.getPatientEmail(),
+                                booking.isAcceptedByDoctor()
                         ));
                     }
                 }
             }
             else {
                 for(Booking booking : bookings) {
-                    hoursList.add(new DateHoursDTO(booking.getBookingDate(), booking.getBookingHour(), booking.getDoctorEmail(),booking.getBookingId(),booking.getPatientEmail()));
+                    hoursList.add(new DateHoursDTO(booking.getBookingDate(), booking.getBookingHour(), booking.getDoctorEmail(),booking.getBookingId(),booking.getPatientEmail(), booking.isAcceptedByDoctor()));
                 }
             }
 
@@ -66,8 +68,20 @@ public class BookingService {
         booking.setPatientEmail(bookingDTO.getPatientEmail());
         booking.setBookingDate(bookingDTO.getDate());
         booking.setBookingHour(bookingDTO.getHours());
+        //booking.setAcceptedByDoctor(false);
         Booking result = bookingRepository.save(booking);
 
         return (result != null && result.getBookingId() != 0);
+    }
+
+    public boolean setBookingAsAccepted(int bookingId) {
+        Booking booking = null;
+        booking =  bookingRepository.findByBookingId(bookingId);
+        if(booking != null) {
+            booking.setAcceptedByDoctor(true);
+            bookingRepository.save(booking);
+        }
+
+        return (booking != null);
     }
 }

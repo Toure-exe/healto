@@ -8,6 +8,8 @@ import UserProfile from './components/UserProflie'
 import './App.css'
 import Booking from './components/Booking'
 import BookingHistory from './components/BookingHistory'
+import MedicalHistory from './components/MedicalHistory'
+import DoctorAppointments from './components/DoctorAppointments'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -22,6 +24,8 @@ function App() {
         <Route path="/booking" element={<Booking />} />
         <Route path="/booking-history" element={<BookingHistory />} />
         <Route path="/profil" element={<UserProfile />} />
+        <Route path="/medical-history" element={<MedicalHistory />} />
+        <Route path="/doctor-appointments" element={<DoctorAppointments />} />
       </Routes>
     </>
     

@@ -42,6 +42,7 @@ export default function BookingHistory() {
                                 <th className="p-3 border">Ora</th>
                                 <th className="p-3 border">Medico</th>
                                 <th className="p-3 border">ID Prenotazione</th>
+                                <th className="p-3 border">Conferma</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -51,6 +52,7 @@ export default function BookingHistory() {
                                     <td className="p-2 border">{booking.hours}</td>
                                     <td className="p-2 border">{booking.doctorEmail}</td>
                                     <td className="p-2 border">{booking.bookingId}</td>
+                                    <td className="p-2 border">{booking.acceptedByDoctor ? "Confermato" : "Non confermato"}</td>
                                 </tr>
                             ))}
                         </tbody>

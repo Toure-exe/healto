@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.List;
 
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/api/report")
 public class ReportController {
@@ -73,6 +74,9 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         List<ReportAndTherapyDTO> reports = reportService.getReportsByEmail(email, role);
+        System.out.println("----->"+reports.size());
+        System.out.println("----->"+email+"<--");
+        System.out.println("----->"+role+"<--");
         if (reports != null)
             return ResponseEntity.ok(reports);
         else

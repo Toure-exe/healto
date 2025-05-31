@@ -21,4 +21,5 @@ public class DateHoursDTO {
     private String doctorEmail;
     private int bookingId;
     private String patientEmail;
+    private boolean isAcceptedByDoctor;
 }

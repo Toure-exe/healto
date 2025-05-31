@@ -20,7 +20,7 @@ public class Booking {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
-    private int BookingId;
+    private int bookingId;
 
     @Column(nullable = false)
     private String doctorEmail;
