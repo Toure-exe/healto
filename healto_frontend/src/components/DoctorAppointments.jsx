@@ -1,9 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 export default function DoctorAppointments() {
     const [appointments, setAppointments] = useState([]);
+    const navigate = useNavigate();
+    const location = useLocation();
+    const mode = new URLSearchParams(location.search).get("mode");
 
     useEffect(() => {
         const doctorEmail = localStorage.getItem("email");
@@ -44,7 +47,6 @@ export default function DoctorAppointments() {
                 }
             )
             .then(() => {
-                // Ricarica la pagina dopo la conferma
                 window.location.reload();
             })
             .catch((err) => {
@@ -53,9 +55,15 @@ export default function DoctorAppointments() {
             });
     };
 
+    const handleWriteReport = (bookingId, patientEmail) => {
+        navigate(`/write-report?bookingId=${bookingId}&patientEmail=${patientEmail}`);
+    };
+
     return (
         <div className="p-6 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
-            <h1 className="text-2xl font-bold mb-6">Appuntamenti prenotati</h1>
+            <h1 className="text-2xl font-bold mb-6">
+                {mode === "report" ? "Seleziona una prenotazione per scrivere il report" : "Appuntamenti prenotati"}
+            </h1>
 
             {appointments.length > 0 ? (
                 <div className="overflow-x-auto">
@@ -71,26 +79,38 @@ export default function DoctorAppointments() {
                             </tr>
                         </thead>
                         <tbody>
-                            {appointments.map((appt) => (
-                                <tr key={appt.bookingId} className="text-center hover:bg-gray-100">
-                                    <td className="p-2 border">{appt.date}</td>
-                                    <td className="p-2 border">{appt.hours}</td>
-                                    <td className="p-2 border">{appt.patientEmail}</td>
-                                    <td className="p-2 border">{appt.bookingId}</td>
-                                    <td className="p-2 border">{appt.acceptedByDoctor ? "Confermato" : "Non confermato"}</td>
-                                    <td className="p-2 border">
-                                        {!appt.acceptedByDoctor && (
-                                                <button
-                                                    onClick={() => handleConfirm(appt.bookingId)}
-                                                    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
-                                                >
-                                                    Conferma avvenimento
-                                                </button>
+                            {appointments
+                                .filter(appt => mode !== "report" || appt.acceptedByDoctor)
+                                .map((appt) => (
+                                    <tr key={appt.bookingId} className="text-center hover:bg-gray-100">
+                                        <td className="p-2 border">{appt.date}</td>
+                                        <td className="p-2 border">{appt.hours}</td>
+                                        <td className="p-2 border">{appt.patientEmail}</td>
+                                        <td className="p-2 border">{appt.bookingId}</td>
+                                        <td className="p-2 border">{appt.acceptedByDoctor ? "Confermato" : "Non confermato"}</td>
+                                        <td className="p-2 border">
+                                            {mode === "report" && appt.acceptedByDoctor ? (
+                                                <Link to={`/write-report?bookingId=${appt.bookingId}&patientEmail=${appt.patientEmail}`}>
+                                                    <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
+                                                        Scrivi report
+                                                    </button>
+                                                </Link>
+
+                                            ) : (
+                                                !appt.acceptedByDoctor && (
+                                                    <button
+                                                        onClick={() => handleConfirm(appt.bookingId)}
+                                                        className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                                                    >
+                                                        Conferma avvenimento
+                                                    </button>
+                                                )
                                             )}
-                                    </td>
-                                </tr>
-                            ))}
+                                        </td>
+                                    </tr>
+                                ))}
                         </tbody>
+
                     </table>
                 </div>
             ) : (

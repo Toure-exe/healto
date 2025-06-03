@@ -20,6 +20,9 @@ public class Report {
     private int reportId;
 
     @Column(nullable = false)
+    private int bookingId;
+
+    @Column(nullable = false)
     private String patientEmail;
 
     @Column(nullable = false)

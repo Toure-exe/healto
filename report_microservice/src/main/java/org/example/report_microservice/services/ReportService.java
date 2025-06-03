@@ -33,6 +33,7 @@ public class ReportService {
         report.setHeight(dto.getHeight());
         report.setSymptoms(dto.getSymptoms());
         report.setClinicalNotes(dto.getClinicalNotes());
+        report.setBookingId(dto.getBookingId());
 
         // Gestione terapia e lista medicine
         if (dto.getTherapyDescription() != null && !dto.getTherapyDescription().isEmpty()) {

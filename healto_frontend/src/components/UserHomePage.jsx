@@ -56,13 +56,13 @@ export default function UserHomePage() {
                     )}
                     {role === 'doctor' && (
                         <>
-                            <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
+                            <Link to="/doctor-appointments?mode=report"><button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
                                 Inserisci report
-                            </button>
+                            </button></Link>
                             <Link to="/medical-history"> <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Storico report
                             </button> </Link>
-                            <Link to="/doctor-appointments"><button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
+                            <Link to="/doctor-appointments?mode=view"><button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-green-700 transition">
                                 Storico visite
                             </button></Link>
                         </>

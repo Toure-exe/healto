@@ -18,6 +18,7 @@ public class ReportAndTherapyDTO {
     private String patientEmail;
     private String doctorEmail;
     private int reportId;
+    private int bookingId;
     private int therapyId;
     private LocalDate reportDate;
     //report info
