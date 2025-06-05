@@ -55,6 +55,37 @@ public class ReportController {
     }
 
     @PreAuthorize("hasRole('DOCTOR')")
+    @PutMapping(value = "/doctor/report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<String> updateReport(@RequestPart("reportAndTherapyDTO") ReportAndTherapyDTO dto,
+                                               @RequestPart(value = "file", required = false) MultipartFile file) {
+        String arrythmiaResult = null;
+
+
+        if (file != null && !file.isEmpty()) {
+            arrythmiaResult = sendFileToArrythmia(file);
+            if (arrythmiaResult == null) {
+                return ResponseEntity.status(HttpStatus.BAD_GATEWAY)
+                        .body("Errore durante la chiamata al microservizio arrythmia");
+            }
+
+            // (opzionale) Log delle predizioni
+            System.out.println("Predizioni arrythmia: " + arrythmiaResult);
+        }
+
+        boolean inserted = reportService.updateReport(dto);
+        if (inserted) {
+            String responseMsg = "Report inserito con successo";
+            if (arrythmiaResult != null) {
+                responseMsg += "\nPredizioni: " + arrythmiaResult;
+            }
+            return ResponseEntity.ok(responseMsg);
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Errore durante l'inserimento del report");
+        }
+    }
+
+    @PreAuthorize("hasRole('DOCTOR')")
     @RequestMapping("/doctor/get-reports-by-email")
     public ResponseEntity<List<ReportAndTherapyDTO>> getDoctorReportsByEmail(@RequestParam("email") String email, @RequestParam("role") String role) {
         if(!role.equals("doctor")){
@@ -74,13 +105,23 @@ public class ReportController {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         }
         List<ReportAndTherapyDTO> reports = reportService.getReportsByEmail(email, role);
-        System.out.println("----->"+reports.size());
-        System.out.println("----->"+email+"<--");
-        System.out.println("----->"+role+"<--");
         if (reports != null)
             return ResponseEntity.ok(reports);
         else
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    }
+
+    @PreAuthorize("hasRole('DOCTOR')")
+    @RequestMapping("/doctor/report/by-booking")
+    public ResponseEntity<ReportAndTherapyDTO> getReportByBookingId(@RequestParam("bookingId") int bookingId, @RequestParam("role") String role) {
+        if(!role.equals("doctor")){
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+        }
+        ReportAndTherapyDTO report = reportService.getReportByIdBooking(bookingId);
+        if (report != null)
+            return ResponseEntity.ok(report);
+        else
+            return ResponseEntity.ok(null);
     }
 
     private String sendFileToArrythmia(MultipartFile file) {

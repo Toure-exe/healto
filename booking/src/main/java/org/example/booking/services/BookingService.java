@@ -32,10 +32,8 @@ public class BookingService {
                     break;
             }
             if(date != null) {
-                System.out.println("ENTROOOOOOOOOOOOO----<");
                 for (Booking booking : bookings) {
                     if (booking.getBookingDate().equals(date)) {
-                        System.out.println("ENTROOOOOOOOOOOOO----<");
                         hoursList.add(new DateHoursDTO(
                                 booking.getBookingDate(),
                                 booking.getBookingHour(),

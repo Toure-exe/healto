@@ -8,4 +8,5 @@ import java.util.List;
 public interface ReportRepository extends CrudRepository<Report, Integer> {
     List<Report> findByDoctorEmail(String role);
     List<Report> findByPatientEmail(String role);
+    Report findByBookingId(Integer bookingId);
 }

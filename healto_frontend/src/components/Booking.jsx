@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -69,6 +70,7 @@ export default function Booking() {
                 }
             );
             alert("Prenotazione effettuata con successo!");
+            useNavigate("/user-home")
         } catch (error) {
             console.error("Errore durante la prenotazione:", error);
             alert("Errore nella prenotazione. Riprova.");
