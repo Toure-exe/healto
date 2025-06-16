@@ -9,7 +9,7 @@ export default function Header() {
                 
             </div>
             <div class="mx-auto max-w-screen-xl flex items-center w-full justify-between">
-                <a href="" class="font-bold text-3xl text-white"> <span> &nbsp; HealtTo </span> </a>
+                <a href="" class="font-bold text-3xl text-white"> <span> &nbsp; HealthTo </span> </a>
             </div>
         </header>
 

@@ -15,7 +15,7 @@ export default function BookingHistory() {
         }
 
         axiosBooking
-            .get(`http://localhost:8082/api/booking/patient/get-patient-booking-list?email=${email}`, {
+            .get(`http://localhost:8082/api/booking/patient/booking?email=${email}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

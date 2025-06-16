@@ -22,8 +22,8 @@ public class BookingController {
     private BookingService bookingService;
 
 
-
-    @GetMapping(value = "/get-doctor-booking-list")
+    //get-doctor-booking-list
+    @GetMapping(value = "/doctor/booking")
     public ResponseEntity<List<DateHoursDTO>> getDoctorBookingsById(@RequestParam("email") String email, @RequestParam(required = false) Optional<LocalDate> date) {
         LocalDate actualDate = null;
         if(email.isEmpty()){
@@ -35,8 +35,9 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsById(email, "doctor", actualDate));
     }
 
+    //insert-booking
     @PreAuthorize("hasRole('PATIENT')")
-    @RequestMapping("/patient/insert-booking") //dopo controllare se il booking inserito non "esiste già"
+    @RequestMapping("/patient/booking") //dopo controllare se il booking inserito non "esiste già"
     public ResponseEntity<String> insertBooking(@RequestBody BookingDTO bookingDTO){
 
         boolean success = bookingService.insertBooking(bookingDTO);
@@ -48,8 +49,9 @@ public class BookingController {
         }
     }
 
+    //get-patient-booking-list
     @PreAuthorize("hasRole('PATIENT')")
-    @GetMapping("/patient/get-patient-booking-list")
+    @GetMapping("/patient/booking")
     public ResponseEntity<List<DateHoursDTO>> getPatientBookingsById(@RequestParam("email") String email){
         System.out.println(email);
         if(email.isEmpty()){
@@ -58,8 +60,9 @@ public class BookingController {
         return ResponseEntity.ok(bookingService.getBookingsById(email, "patient",null));
     }
 
+    //confirm-booking
     @PreAuthorize("hasRole('DOCTOR')")
-    @PutMapping("/doctor/confirm-booking")
+    @PutMapping("/doctor/booking")
     public ResponseEntity<String> setBookingAsAcceptedByDoctor(@RequestBody int bookingId){
         if(bookingId <= 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

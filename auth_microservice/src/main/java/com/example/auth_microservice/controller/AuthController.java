@@ -55,7 +55,8 @@ public class AuthController {
         return ResponseEntity.status(HttpStatus.OK).body(token);
     }
 
-    @RequestMapping("/get-doctor-list")
+    //get-doctor-list
+    @RequestMapping("/doctor")
     public ResponseEntity<List<DoctorDTO>> getDoctorList(){
        List<DoctorDTO> doctors = authServices.getDoctors();
        if(doctors != null && !doctors.isEmpty())

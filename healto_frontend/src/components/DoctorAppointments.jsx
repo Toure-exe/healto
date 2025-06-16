@@ -18,7 +18,7 @@ export default function DoctorAppointments() {
         }
 
         axios
-            .get(`http://localhost:8082/api/booking/get-doctor-booking-list?email=${doctorEmail}`, {
+            .get(`http://localhost:8082/api/booking/doctor/booking?email=${doctorEmail}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -37,7 +37,7 @@ export default function DoctorAppointments() {
 
         axios
             .put(
-                "http://localhost:8082/api/booking/doctor/confirm-booking",
+                "http://localhost:8082/api/booking/doctor/booking",
                 bookingId,
                 {
                     headers: {

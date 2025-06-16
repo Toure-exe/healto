@@ -14,11 +14,12 @@ export default function Booking() {
     const [occupiedSlots, setOccupiedSlots] = useState([]);
     const [availableSlots, setAvailableSlots] = useState([]);
     const [selectedSlot, setSelectedSlot] = useState("");
+    const navigate = useNavigate();
 
     const allSlots = ["08:00", "09:00", "10:00", "11:00", "12:00", "13:00"];
 
     useEffect(() => {
-        axiosAuth.get("http://localhost:8080/get-doctor-list")
+        axiosAuth.get("http://localhost:8080/doctor")
             .then(res => setDoctors(res.data))
             .catch(err => console.error("Errore nel recupero dei medici:", err));
     }, []);
@@ -26,7 +27,7 @@ export default function Booking() {
     useEffect(() => {
         if (selectedDoctorEmail && selectedDate) {
             const dateStr = selectedDate.toLocaleDateString("en-CA");;
-            axiosBooking.get(`http://localhost:8082/api/booking/get-doctor-booking-list?email=${selectedDoctorEmail}&date=${dateStr}`)
+            axiosBooking.get(`http://localhost:8082/api/booking/doctor/booking?email=${selectedDoctorEmail}&date=${dateStr}`)
                 .then(res => {
                     const occupied = res.data.map(booking => booking.hours);
                     setOccupiedSlots(occupied);
@@ -60,7 +61,7 @@ export default function Booking() {
 
         try {
             await axiosBooking.post(
-                "http://localhost:8082/api/booking/patient/insert-booking",
+                "http://localhost:8082/api/booking/patient/booking",
                 payload,
                 {
                     headers: {
@@ -70,7 +71,8 @@ export default function Booking() {
                 }
             );
             alert("Prenotazione effettuata con successo!");
-            useNavigate("/user-home")
+            //useNavigate("/user-home")
+            navigate("/user-home");
         } catch (error) {
             console.error("Errore durante la prenotazione:", error);
             alert("Errore nella prenotazione. Riprova.");

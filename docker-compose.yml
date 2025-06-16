@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+  # === MYSQL DATABASES ===
+  auth_db:
+    image: mysql:8.0
+    container_name: auth_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: auth_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3307:3306"
+    volumes:
+      - auth_db_data:/var/lib/mysql
+      - ./db_init/auth_db:/docker-entrypoint-initdb.d
+
+  booking_db:
+    image: mysql:8.0
+    container_name: booking_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: booking_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3308:3306"
+    volumes:
+      - booking_db_data:/var/lib/mysql
+      - ./db_init/booking_db:/docker-entrypoint-initdb.d
+
+  report_db:
+    image: mysql:8.0
+    container_name: report_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: report_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - "3309:3306"
+    volumes:
+      - report_db_data:/var/lib/mysql
+      - ./db_init/report_db:/docker-entrypoint-initdb.d
+
+  # === SPRING BOOT MICROSERVICES ===
+  auth_microservice:
+    build: ./auth_microservice
+    container_name: auth_microservice
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://auth_db:3306/auth_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - auth_db
+
+  booking_microservice:
+    build: ./booking_microservice
+    container_name: booking_microservice
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://booking_db:3306/booking_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - booking_db
+
+  report_microservice:
+    build: ./report_microservice
+    container_name: report_microservice
+    ports:
+      - "8083:8083"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://report_db:3306/report_db
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+    depends_on:
+      - report_db
+
+  # === FASTAPI MICROSERVICE ===
+  arrhythmia_microservice:
+    build: ./arrhythmia_microservice
+    container_name: arrhythmia_microservice
+    ports:
+      - "8000:8000"
+
+# === VOLUMES DEFINITION ===
+volumes:
+  auth_db_data:
+  booking_db_data:
+  report_db_data:

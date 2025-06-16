@@ -17,10 +17,10 @@ export default function MedicalHistory() {
         }
 
         if(role == "patient"){
-            url = `http://localhost:8083/api/report/patient/get-reports-by-email?email=${email}&role=${role}`;
+            url = `http://localhost:8083/api/report/patient/report?email=${email}&role=${role}`;
         }
         else if (role == "doctor"){
-            url = `http://localhost:8083/api/report/doctor/get-reports-by-email?email=${email}&role=${role}`
+            url = `http://localhost:8083/api/report/doctor/report?email=${email}&role=${role}`
         }
 
         axios

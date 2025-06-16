@@ -17,7 +17,7 @@ public class RegisterRequestDTO {
     private String role;
     private String surname;
     @Setter
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    //@JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate birthDate;
 
 }

@@ -130,7 +130,7 @@ export default function WriteReport() {
             let response ="";
             const url = isEditing
                 ? `http://localhost:8083/api/report/doctor/report`
-                : `http://localhost:8083/api/report/doctor/insert-report`;
+                : `http://localhost:8083/api/report/doctor/report`;
     
             const method = isEditing ? "put" : "post";
     

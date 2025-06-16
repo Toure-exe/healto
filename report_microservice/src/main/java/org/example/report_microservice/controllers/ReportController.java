@@ -23,8 +23,9 @@ public class ReportController {
     @Autowired
     private ReportService reportService;
 
+    //insert-report
     @PreAuthorize("hasRole('DOCTOR')")
-    @PostMapping(value = "/doctor/insert-report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/doctor/report", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<String> insertReport(@RequestPart("reportAndTherapyDTO") ReportAndTherapyDTO dto,
                                                @RequestPart(value = "file", required = false) MultipartFile file) {
         String arrythmiaResult = null;
@@ -85,8 +86,9 @@ public class ReportController {
         }
     }
 
+    //get-reports-by-email
     @PreAuthorize("hasRole('DOCTOR')")
-    @RequestMapping("/doctor/get-reports-by-email")
+    @RequestMapping("/doctor/report")
     public ResponseEntity<List<ReportAndTherapyDTO>> getDoctorReportsByEmail(@RequestParam("email") String email, @RequestParam("role") String role) {
         if(!role.equals("doctor")){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
@@ -99,7 +101,7 @@ public class ReportController {
     }
 
     @PreAuthorize("hasRole('PATIENT')")
-    @RequestMapping("/patient/get-reports-by-email")
+    @RequestMapping("/patient/report")
     public ResponseEntity<List<ReportAndTherapyDTO>> getPatientReportsByEmail(@RequestParam("email") String email, @RequestParam("role") String role) {
         if(!role.equals("patient")){
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
