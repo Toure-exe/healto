@@ -10,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class MedicineDTO {
+    private Long medicineId;
     private String medicineName;
     private String medicineDosage;
     private String medicineFrequency;

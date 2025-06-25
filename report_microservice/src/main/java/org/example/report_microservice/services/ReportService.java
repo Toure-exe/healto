@@ -63,44 +63,65 @@ public class ReportService {
         return savedReport.getReportId() > 0;
     }
 
-    public boolean updateReport(ReportAndTherapyDTO dto){
+    public boolean updateReport(ReportAndTherapyDTO dto) {
         Optional<Report> result = reportRepository.findById(dto.getReportId());
-        if(result.isPresent()){
-            Report report =  result.get();
-            report.setReportId(dto.getReportId());
-            report.setDoctorEmail(dto.getDoctorEmail());
-            report.setPatientEmail(dto.getPatientEmail());
-            report.setReportDate(dto.getReportDate());
-            report.setBloodPressure(dto.getBloodPressure());
-            report.setBloodType(dto.getBloodType());
-            report.setTemperature(dto.getTemperature());
-            report.setWeight(dto.getWeight());
-            report.setHeight(dto.getHeight());
-            report.setSymptoms(dto.getSymptoms());
-            report.setClinicalNotes(dto.getClinicalNotes());
-            report.setBookingId(dto.getBookingId());
-            if (dto.getTherapyDescription() != null && !dto.getTherapyDescription().isEmpty()) {
-                Therapy therapy = new Therapy();
-                therapy.setTherapyDescription(dto.getTherapyDescription());
-                List<Medicine> medicines = new ArrayList<>();
-                if (dto.getMedicines() != null) {
-                    for (MedicineDTO medDto : dto.getMedicines()) {
-                        Medicine medicine = new Medicine();
-                        medicine.setMedicineName(medDto.getMedicineName());
-                        medicine.setMedicineDosage(medDto.getMedicineDosage());
-                        medicine.setMedicineFrequency(medDto.getMedicineFrequency());
-                        medicine.setMedicineDurationInDays(medDto.getMedicineDurationInDays());
-                        medicines.add(medicine);
-                    }
-                    therapy.setMedicines(medicines);
-                    therapy.setReport(report);
+        if (result.isEmpty()) {
+            return false;
+        }
+
+        Report report = result.get();
+
+        // Aggiorna i campi base del Report
+        report.setDoctorEmail(dto.getDoctorEmail());
+        report.setPatientEmail(dto.getPatientEmail());
+        report.setReportDate(dto.getReportDate());
+        report.setBloodPressure(dto.getBloodPressure());
+        report.setBloodType(dto.getBloodType());
+        report.setTemperature(dto.getTemperature());
+        report.setWeight(dto.getWeight());
+        report.setHeight(dto.getHeight());
+        report.setSymptoms(dto.getSymptoms());
+        report.setClinicalNotes(dto.getClinicalNotes());
+        report.setBookingId(dto.getBookingId());
+
+        // Aggiorna Therapy se presente nel DTO
+        if (dto.getTherapyDescription() != null && !dto.getTherapyDescription().isBlank()) {
+            Therapy therapy = report.getTherapy();
+            if (therapy == null) {
+                therapy = new Therapy();
+                therapy.setReport(report);
+                report.setTherapy(therapy);
+            }
+
+            therapy.setTherapyDescription(dto.getTherapyDescription());
+
+            // Pulisci e sostituisci la lista delle Medicine
+            if (therapy.getMedicines() == null) {
+                therapy.setMedicines(new ArrayList<>());
+            } else {
+                therapy.getMedicines().clear();
+            }
+
+            if (dto.getMedicines() != null) {
+                for (MedicineDTO medDto : dto.getMedicines()) {
+                    Medicine medicine = new Medicine();
+                    // Attenzione: se usi ID autogenerato, NON impostarlo per medicine nuove
+                    medicine.setMedicineName(medDto.getMedicineName());
+                    medicine.setMedicineDosage(medDto.getMedicineDosage());
+                    medicine.setMedicineFrequency(medDto.getMedicineFrequency());
+                    medicine.setMedicineDurationInDays(medDto.getMedicineDurationInDays());
+                    medicine.setTherapy(therapy);
+                    therapy.getMedicines().add(medicine);
                 }
             }
-            Report res = reportRepository.save(report);
-            return (res.getReportId() > 0 && res != null);
         }
-        return false;
+
+        // Salva il report, Therapy e Medicine saranno salvati grazie a cascade = CascadeType.ALL
+        Report saved = reportRepository.save(report);
+
+        return saved != null && saved.getReportId() > 0;
     }
+
 
 
     @Transactional
@@ -180,6 +201,8 @@ public class ReportService {
                 List<MedicineDTO> medicineDTOs = new ArrayList<>();
                 for (Medicine m : result.getTherapy().getMedicines()) {
                     MedicineDTO mDto = new MedicineDTO();
+                    mDto.setMedicineId(m.getMedicineId());
+                    System.out.println("MEDICINA ID-------> "+mDto.getMedicineId());
                     mDto.setMedicineName(m.getMedicineName());
                     mDto.setMedicineDosage(m.getMedicineDosage());
                     mDto.setMedicineFrequency(m.getMedicineFrequency());

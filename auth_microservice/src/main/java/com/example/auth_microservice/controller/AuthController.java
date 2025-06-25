@@ -20,7 +20,7 @@ public class AuthController {
     @Autowired
     private AuthService authServices;
 
-    @RequestMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<LoggedUserDTO> login(@RequestBody LoginRequestDTO loginRequestDTO) {
         ResponseEntity<LoggedUserDTO> response = null;
         LoggedUserDTO result = authServices.login(loginRequestDTO);
@@ -32,13 +32,13 @@ public class AuthController {
         return response;
     }
 
-    @RequestMapping("/login/sso-google")
+    @PostMapping("/login/sso-google")
     public void loginGoogle(HttpServletResponse response) throws IOException {
         System.out.println("sso-ggogle<<<");
         response.sendRedirect("/oauth2/authorization/google");
     }
 
-    @RequestMapping("/register")
+    @PostMapping("/register")
     public ResponseEntity<String>  register(@RequestBody RegisterRequestDTO request) {
         ResponseEntity<String>  response = null;
         if(!authServices.insertUser(request))

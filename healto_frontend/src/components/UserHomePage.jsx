@@ -60,7 +60,7 @@ export default function UserHomePage() {
                             </Link>
                             <Link to="/medical-history">
                                 <button className="w-full flex items-center justify-center gap-2 px-6 py-4 bg-green-600 text-white text-lg rounded-xl hover:bg-green-700 transition">
-                                    📖 Storico medico
+                                    📖 Storico report
                                 </button>
                             </Link>
                             <Link to="/booking-history">
