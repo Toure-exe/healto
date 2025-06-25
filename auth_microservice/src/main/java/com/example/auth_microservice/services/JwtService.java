@@ -13,7 +13,7 @@ import java.util.Date;
 @Service
 public class JwtService {
     private final String secretKey = "chiaveSuperSegreta12345"; // usa un valore forte in produzione
-    private final long expirationMs = 600000; // 10 minuti
+    private final long expirationMs = 1800000; // 30 minuti
 
     public String generateToken(User user) {
         return Jwts.builder()
