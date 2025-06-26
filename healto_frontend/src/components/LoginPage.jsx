@@ -29,8 +29,9 @@ function LoginPage() {
             localStorage.setItem('lastName', lastName)
             localStorage.setItem('email', userEmail)
             localStorage.setItem('role', role)
-
-            navigate('/user-home')
+            
+            if(localStorage.getItem('token') != "")
+                navigate('/user-home')
         } catch (error) {
             console.error('Errore durante il login', error)
             alert('Credenziali non valide')

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Header from './Header';
 import axios from 'axios';
 import healto_logo from '../assets/healto_logo.png';
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterPage() {
     const [email, setEmail] = useState('');
@@ -11,8 +12,9 @@ export default function RegisterPage() {
     const [repeatPassword, setRepeatPassword] = useState('');
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
-    const [role, setRole] = useState('PAZIENTE'); // valore predefinito
+    const [role, setRole] = useState('patient'); // valore predefinito
     const [birthDate, setBirthDate] = useState('');
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

@@ -5,6 +5,8 @@ import com.example.auth_microservice.repository.UserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +19,8 @@ public class AuthService {
     private UserRepository userRepository;
     @Autowired
     private JwtService jwtService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public boolean insertUser(RegisterRequestDTO dto) {
         boolean result = false;
@@ -26,7 +30,7 @@ public class AuthService {
 
                 User user = new User();
                 user.setEmail(dto.getEmail());
-                user.setPassword(dto.getPassword());
+                user.setPassword(passwordEncoder.encode(dto.getPassword()));
                 user.setName(dto.getName());
                 user.setSurname(dto.getSurname());
                 user.setFiscalCode(dto.getFiscalCode());
@@ -56,7 +60,8 @@ public class AuthService {
             result.setLastName(user.getSurname());
             result.setRole(user.getRole());
 
-            if (user.getPassword().equals(dto.getPassword())) {
+            //passwordEncoder.matches(dto.getPassword(), user.getPassword())
+            if (passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
                 result.setToken(jwtService.generateToken((userRepository.findByEmail(dto.getEmail())).get()));
             }
 
