@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 16, 2025 alle 02:37
+-- Creato il: Giu 27, 2025 alle 14:01
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -42,11 +42,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`email`, `role`, `birth_date`, `fiscal_code`, `name`, `password`, `surname`) VALUES
-('lucky.luke@example.com', 'doctor', '1989-05-14', 'CODFISC-LUKE', 'Lucky', 'supersegreta', 'Luke'),
-('luigi.bianchi@example.com', 'patient', '1997-03-04', 'CODFISC-LUIGI', 'Luigi', 'supersegreta3', 'Banchi'),
-('mario.rossi@example.com', 'doctor', '1980-03-12', 'CODICE FISCALE 2', 'Mario', 'supersegreta1', 'Rossi'),
-('toure.isso@gmail.com', 'patient', '1999-04-01', 'CODMW3', 'toure', 'oauth2_google', 'ismaila'),
-('yuri.cechi@example.com', 'patient', '1999-03-12', 'CODICE FISCALE 3', 'Jury', 'supersegreta', 'Cechi');
+('joe.dalton@example.com', 'patient', '1990-10-10', 'CODFISC', 'Joe', '$2a$10$3v/bOhstNnV7.YoUGQp.RuhRXUIfJlbcgcX4HdkIwjWxuNc7kcbpW', 'Dalton'),
+('lucky.luke@example.com', 'doctor', '1997-04-22', 'CODFISC1', 'lucky', '$2a$10$3UvM0gY4ujpoYxgdevCAPO7XqijTm9J7.dx8Ux6.aBNNLWGWTPLYm', 'luke');
 
 --
 -- Indici per le tabelle scaricate

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 16, 2025 alle 02:40
+-- Creato il: Giu 27, 2025 alle 14:03
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -46,8 +46,10 @@ INSERT INTO `medicine` (`medicine_id`, `medicine_dosage`, `medicine_duration_in_
 (8, '2mg', 5, '3 volte al giorno', 'zerinol', 7),
 (9, '4mg', 3, 'ccc', 'Doliprane', 8),
 (10, 'ddd', 4, 'ddd', 'ddd', 9),
-(11, '2mg', 5, '3 volte al giorno', 'Machiatine', 10),
-(12, '2mg', 1, '3 volte al giorno', 'paracetamol', 11);
+(20, '2mg', 5, '3 volte al giorno', 'ASMR', 10),
+(21, '1mg', 1, '1 volta al giorno', 'ASPIRINA 2', 10),
+(24, '2mg', 1, '5 volte al giorno', 'paracetamol', 11),
+(25, '2mg', 1, '3 volte al giorno', 'Aspirina', 12);
 
 -- --------------------------------------------------------
 
@@ -80,8 +82,9 @@ INSERT INTO `report` (`report_id`, `blood_pressure`, `blood_type`, `clinical_not
 (7, 120, 'O+', 'aaa bbb', 'mario.rossi@example.com', 180, 'toure.isso@gmail.com', '2025-06-05', 'aaa bbb', 33.3, 80, 3),
 (8, 122, 'AB+', 'ccc', 'mario.rossi@example.com', 75, 'yuri.cechi@example.com', '2025-06-05', 'ccc', 34, 78, 4),
 (9, 121, 'O+', 'dddd', 'mario.rossi@example.com', 180, 'toure.isso@gmail.com', '2025-06-05', 'dddd', 33.32, 80, 5),
-(10, 122, 'A+', 'vvvv', 'mario.rossi@example.com', 175, 'luigi.bianchi@example.com', '2025-06-14', 'vvv', 32, 77, 8),
-(11, 121, 'B-', 'zzz', 'lucky.luke@example.com', 179, 'luigi.bianchi@example.com', '2025-06-14', 'zzzz', 34, 74, 12);
+(10, 123, 'B+', 'vvvv CCC', 'mario.rossi@example.com', 175, 'luigi.bianchi@example.com', '2025-06-25', 'vvv', 32, 80, 8),
+(11, 121, 'B-', 'AAAA', 'lucky.luke@example.com', 179, 'luigi.bianchi@example.com', '2025-06-25', 'zzzz', 34, 74, 12),
+(12, 120, 'AB+', 'QQQQ', 'lucky.luke@example.com', 170, 'luigi.bianchi@example.com', '2025-06-25', 'QQQQ', 29.8, 78, 9);
 
 -- --------------------------------------------------------
 
@@ -105,8 +108,9 @@ INSERT INTO `therapy` (`therapy_id`, `therapy_description`, `report_id`) VALUES
 (7, 'Sessione di ASMR', 7),
 (8, 'ccc', 8),
 (9, 'dddd', 9),
-(10, 'vvvv', 10),
-(11, 'zzzz', 11);
+(10, 'vvvv CC', 10),
+(11, 'CCCC', 11),
+(12, 'QQQQQQ', 12);
 
 --
 -- Indici per le tabelle scaricate
@@ -140,19 +144,19 @@ ALTER TABLE `therapy`
 -- AUTO_INCREMENT per la tabella `medicine`
 --
 ALTER TABLE `medicine`
-  MODIFY `medicine_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `medicine_id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
 -- AUTO_INCREMENT per la tabella `report`
 --
 ALTER TABLE `report`
-  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `report_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT per la tabella `therapy`
 --
 ALTER TABLE `therapy`
-  MODIFY `therapy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `therapy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Limiti per le tabelle scaricate

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 16, 2025 alle 02:39
+-- Creato il: Giu 27, 2025 alle 14:02
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -52,7 +52,8 @@ INSERT INTO `booking` (`booking_id`, `booking_date`, `booking_hour`, `doctor_ema
 (9, '2025-06-09', '08:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'1'),
 (10, '2025-06-12', '10:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'0'),
 (11, '2025-06-11', '13:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'0'),
-(12, '2025-06-13', '08:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'1');
+(12, '2025-06-13', '08:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'1'),
+(13, '2025-06-26', '08:00', 'lucky.luke@example.com', 'yuri.cechi@example.com', b'0');
 
 --
 -- Indici per le tabelle scaricate
@@ -72,7 +73,7 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT per la tabella `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
