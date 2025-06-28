@@ -37,6 +37,7 @@ public class SecurityConfig {
                                 "/",
                                 "/login",
                                 "/login/sso-google",
+                                "/api/logout",
                                 "/register",
                                 "/doctor",
                                 "/user",
@@ -47,6 +48,8 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2 -> oauth2
                         .successHandler(oAuth2SuccessHandler)
+                ).logout(logout -> logout
+                        .logoutUrl("/spring-security-logout") // <-- handler logout predefinito modificato a "/spring-security-logout"
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
 

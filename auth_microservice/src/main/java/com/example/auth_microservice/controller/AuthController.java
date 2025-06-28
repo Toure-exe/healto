@@ -3,7 +3,10 @@ package com.example.auth_microservice.controller;
 import ch.qos.logback.core.model.Model;
 import com.example.auth_microservice.DTO.*;
 import com.example.auth_microservice.services.AuthService;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -32,10 +35,26 @@ public class AuthController {
         return response;
     }
 
-    @PostMapping("/login/sso-google")
+    @GetMapping("/login/sso-google")
     public void loginGoogle(HttpServletResponse response) throws IOException {
         System.out.println("sso-ggogle<<<");
         response.sendRedirect("/oauth2/authorization/google");
+    }
+
+    @RequestMapping("/api/logout")
+    public ResponseEntity<Void> logout(HttpServletRequest request, HttpServletResponse response) throws ServletException {
+        try {
+            request.logout(); // logout SSO se presente
+        } catch (IllegalStateException e) {
+            // Ignora se non esiste autenticazione
+        }
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping("/register")

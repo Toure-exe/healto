@@ -24,14 +24,20 @@ function LoginPage() {
 
             const { token, role, firstName, lastName, email: userEmail } = response.data
 
-            localStorage.setItem('token', token)
-            localStorage.setItem('firstName', firstName)
-            localStorage.setItem('lastName', lastName)
-            localStorage.setItem('email', userEmail)
-            localStorage.setItem('role', role)
-            
-            if(localStorage.getItem('token') != "")
+            if(token != null && token !== "" ){
+                localStorage.setItem('token', token)
+                localStorage.setItem('firstName', firstName)
+                localStorage.setItem('lastName', lastName)
+                localStorage.setItem('email', userEmail)
+                localStorage.setItem('role', role)
                 navigate('/user-home')
+            }else{
+                alert("Login non effettuato, controllare i dati");
+            }
+
+            
+            //if(localStorage.getItem('token') != "")
+                
         } catch (error) {
             console.error('Errore durante il login', error)
             alert('Credenziali non valide')

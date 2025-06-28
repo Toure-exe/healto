@@ -13,8 +13,13 @@ export default function UserHomePage() {
 
     const navigate = useNavigate()
 
-    const handleLogout = () => {
+    const handleLogout = async () => {
         localStorage.clear()
+         try {
+                await axios.get("http://localhost:8080/api/logout", { withCredentials: true });
+        } catch (e) {
+            console.warn("Errore durante il logout", e);
+        }
         navigate('/')
     }
 

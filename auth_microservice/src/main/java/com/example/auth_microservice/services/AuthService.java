@@ -62,7 +62,7 @@ public class AuthService {
 
             //passwordEncoder.matches(dto.getPassword(), user.getPassword())
             if (passwordEncoder.matches(dto.getPassword(), user.getPassword())) {
-                result.setToken(jwtService.generateToken((userRepository.findByEmail(dto.getEmail())).get()));
+                result.setToken(jwtService.generateToken(user));
             }
 
         }
