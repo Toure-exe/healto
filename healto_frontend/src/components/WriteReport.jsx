@@ -9,7 +9,8 @@ export default function WriteReport() {
     const params = new URLSearchParams(location.search);
     const role = localStorage.getItem("role");
     const bookingId = params.get("bookingId");
-    const patientEmail = params.get("patientEmail");
+    const patientEmailAddress = params.get("patientEmail");
+    const bookingDate = params.get("bookingDate");
     const doctorEmail = localStorage.getItem("email");
     const [file, setFile] = useState(null);
     const [isEditing, setIsEditing] = useState(false);
@@ -121,14 +122,17 @@ export default function WriteReport() {
         e.preventDefault();
         const token = localStorage.getItem("token");
         const today = new Date().toISOString().split("T")[0];
+        console.log("patient email: ",patientEmailAddress);
+        console.log("today: ",today);
+        
 
         const dto = {
+            ...formData,
             bookingId,
-            patientEmail,
+            patientEmail: patientEmailAddress,
             doctorEmail,
             reportDate: today,
             reportId: reportId || 0,
-            ...formData,
         };
 
         const formDataToSend = new FormData();
@@ -140,6 +144,8 @@ export default function WriteReport() {
             "reportAndTherapyDTO",
             new Blob([JSON.stringify(dto)], { type: "application/json" })
         );
+
+        console.log("DTO JSON:", JSON.stringify(dto));
 
         try {
             const url = `http://localhost:8083/api/report/doctor/report`;
@@ -192,8 +198,8 @@ export default function WriteReport() {
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
             <h2 className="text-2xl font-bold mb-6">Inserisci report medico </h2>
-            <h2 className="text-2xl font-bold mb-4">  Email del paziente: {formData.patientEmail}</h2>
-            <h2 className="text-2xl font-bold mb-4">  Sostenuto in data: {formData.reportDate}</h2>
+            <h2 className="text-2xl font-bold mb-4">  Email del paziente: {patientEmailAddress}</h2>
+            <h2 className="text-2xl font-bold mb-4">  Sostenuto in data: {bookingDate}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
                     <div>

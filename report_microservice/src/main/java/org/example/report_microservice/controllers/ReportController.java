@@ -136,7 +136,14 @@ public class ReportController {
 
             HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body, headers);
 
-            String url = "http://localhost:8000/upload"; // URL del microservizio arrythmia
+            //String url = "http://localhost:8000/upload"; // URL del microservizio arrythmia
+            String url;
+            if ("true".equals(System.getenv("ENV_IN_CONTAINER"))) {
+                url = "http://arrhythmia_microservice:8000/upload";
+            } else {
+                url = "http://localhost:8000/upload";
+            }
+            System.out.println("----> indirizzo arrhythmia: " + url);
 
             RestTemplate restTemplate = new RestTemplate();
             ResponseEntity<String> response = restTemplate.postForEntity(url, requestEntity, String.class);

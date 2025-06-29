@@ -90,7 +90,7 @@ export default function DoctorAppointments() {
                                         <td className="p-2 border">{appt.acceptedByDoctor ? "Confermato" : "Non confermato"}</td>
                                         <td className="p-2 border">
                                             {mode === "report" && appt.acceptedByDoctor ? (
-                                                <Link to={`/write-report?bookingId=${appt.bookingId}&patientEmail=${appt.patientEmail}`}>
+                                                <Link to={`/write-report?bookingId=${appt.bookingId}&patientEmail=${appt.patientEmail}&bookingDate=${appt.date}`}>
                                                     <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition">
                                                         Scrivi report
                                                     </button>

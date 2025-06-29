@@ -81,6 +81,7 @@ services:
       SPRING_DATASOURCE_URL: jdbc:mysql://report_db:3306/report_db
       SPRING_DATASOURCE_USERNAME: user
       SPRING_DATASOURCE_PASSWORD: password
+      ENV_IN_CONTAINER: "true"
     depends_on:
       - report_db
 
