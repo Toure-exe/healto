@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import axios from "axios";
 import { X } from "lucide-react";
+import healto_logo from '../assets/healto_logo.png';
 
 export default function WriteReport() {
     const location = useLocation();
@@ -16,6 +17,7 @@ export default function WriteReport() {
     const [isEditing, setIsEditing] = useState(false);
     const [reportId, setReportId] = useState(null);
     const [resultMessage, setResultMessage] = useState("");
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const [formData, setFormData] = useState({
         bloodPressure: "",
@@ -120,11 +122,13 @@ export default function WriteReport() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsSubmitting(true); // Disabilita subito il bottone se fa l'inserimento del report
+
         const token = localStorage.getItem("token");
         const today = new Date().toISOString().split("T")[0];
-        console.log("patient email: ",patientEmailAddress);
-        console.log("today: ",today);
-        
+        console.log("patient email: ", patientEmailAddress);
+        console.log("today: ", today);
+
 
         const dto = {
             ...formData,
@@ -197,8 +201,9 @@ export default function WriteReport() {
 
     return (
         <div className="max-w-4xl mx-auto p-6 bg-white rounded shadow">
-            <h2 className="text-2xl font-bold mb-6">Inserisci report medico </h2>
-            <h2 className="text-2xl font-bold mb-4">  Email del paziente: {patientEmailAddress}</h2>
+            <div align="center"><img src={healto_logo} alt="logo" width="15%" height="15%" /></div>
+            <h2 className="text-2xl font-bold text-blue-700 mb-6">Inserisci report medico </h2>
+            <h2 className="text-2xl font-bold text-purple-700 mb-4">  Email del paziente: {patientEmailAddress}</h2>
             <h2 className="text-2xl font-bold mb-4">  Sostenuto in data: {bookingDate}</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
                 <div className="grid grid-cols-2 gap-4">
@@ -398,12 +403,23 @@ export default function WriteReport() {
                 </div>
 
                 <div className="flex space-x-4 pt-4">
-                    <button
-                        type="submit"
-                        className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-                    >
-                        {isEditing ? "Aggiorna report" : "Invia report"}
-                    </button>
+                    {!isEditing && !isSubmitting && (
+                        <button
+                            type="submit"
+                            className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                        >
+                            Invia report
+                        </button>
+                    )}
+                    {isEditing && (
+                        <button
+                            type="submit"
+                            className="px-6 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
+                        >
+                            Aggiorna report
+                        </button>
+                    )}
+
                     <Link to="/user-home">
                         <button
                             type="button"

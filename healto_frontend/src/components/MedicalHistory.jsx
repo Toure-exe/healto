@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import healto_logo from '../assets/healto_logo.png';
 
 export default function MedicalHistory() {
     const [reportList, setReportList] = useState([]);
@@ -40,6 +41,7 @@ export default function MedicalHistory() {
 
     return (
         <div className="p-6 max-w-6xl mx-auto bg-white rounded-lg shadow-md">
+            <div align="center"><img src={healto_logo} alt="logo" width="15%" height="15%" /></div>
             <h1 className="text-2xl font-bold mb-6">Storico medico</h1>
 
             {reportList.length > 0 ? (
@@ -50,10 +52,14 @@ export default function MedicalHistory() {
                             className="border border-gray-300 rounded-lg p-4 bg-gray-50 hover:shadow transition"
                         >
                             <h2 className="text-lg font-semibold text-blue-700 mb-2">
-                                Visita del {report.reportDate} con {localStorage.getItem("role") == "patient" ? report.doctorEmail : report.patientEmail}
+                                Email del {localStorage.getItem("role") == "patient" ? ("medico: "+report.doctorEmail) : ("paziente: " +report.patientEmail)}
+                            </h2>
+                            <h2 className="text-lg font-semibold text-purple-700 mb-2">
+                                Report scritto in data: {report.reportDate}
                             </h2>
                             <div className="grid grid-cols-2 gap-4 text-sm">
                                 <div>
+                                    <p><strong>Id prenotazione:</strong> {report.bookingId} </p>
                                     <p><strong>Pressione sanguigna:</strong> {report.bloodPressure} mmHg</p>
                                     <p><strong>Temperatura:</strong> {report.temperature} °C</p>
                                     <p><strong>Peso:</strong> {report.weight} kg</p>

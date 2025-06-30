@@ -145,6 +145,7 @@ public class ReportService {
         for (Report r : reports) {
             ReportAndTherapyDTO dto = new ReportAndTherapyDTO();
             dto.setReportId(r.getReportId());
+            dto.setBookingId(r.getBookingId());
             dto.setDoctorEmail(r.getDoctorEmail());
             dto.setPatientEmail(r.getPatientEmail());
             dto.setReportDate(r.getReportDate());

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import healto_logo from '../assets/healto_logo.png';
 
 export default function DoctorAppointments() {
     const [appointments, setAppointments] = useState([]);
@@ -61,6 +62,7 @@ export default function DoctorAppointments() {
 
     return (
         <div className="p-6 max-w-5xl mx-auto bg-white rounded-lg shadow-md">
+            <div align="center"><img src={healto_logo} alt="logo" width="15%" height="15%" /></div>
             <h1 className="text-2xl font-bold mb-6">
                 {mode === "report" ? "Seleziona una prenotazione per scrivere il report" : "Appuntamenti prenotati"}
             </h1>
