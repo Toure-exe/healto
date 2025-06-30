@@ -49,7 +49,7 @@ services:
 
   # === SPRING BOOT MICROSERVICES ===
   auth_microservice:
-    build: ./auth_microservice
+    image: clowncraft/auth_microservice:latest
     container_name: auth_microservice
     ports:
       - "8080:8080"
@@ -61,7 +61,7 @@ services:
       - auth_db
 
   booking_microservice:
-    build: ./booking_microservice
+    image: clowncraft/booking_microservice:latest
     container_name: booking_microservice
     ports:
       - "8082:8082"
@@ -73,7 +73,7 @@ services:
       - booking_db
 
   report_microservice:
-    build: ./report_microservice
+    image: clowncraft/report_microservice:latest
     container_name: report_microservice
     ports:
       - "8083:8083"
@@ -87,7 +87,7 @@ services:
 
   # === FASTAPI MICROSERVICE ===
   arrhythmia_microservice:
-    build: ./arrhythmia_microservice
+    image: clowncraft/arrhythmia_microservice:latest
     container_name: arrhythmia_microservice
     ports:
       - "8000:8000"
