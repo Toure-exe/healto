@@ -19,7 +19,7 @@ Assicurati di aver installato:
 
 ## 🚀 Avvio del frontend
 
-1. Apri un nuovo terminale e vai nella cartella healto_frontend
+1. Apri un nuovo terminale e vai nella cartella `healto_frontend`
 2. Avvia il frontend con:
 - `npm install`
 - `npm run dev`
@@ -28,5 +28,7 @@ Assicurati di aver installato:
 - Questo microservizio esegue una rete neurale abbastanza bisognosa dal punto di vista della RAM
 - Sono raccomandati almeno 8GB di RAM dedicati al container per funzionare bene
 - Se la RAM assegnata al container è insufficiente, quest'ultimo potrebbe venire chiuso automaticamente durante l’inferenza da Docker, causando errori HTTP.
-- Su linux si può aumentare la memoria RAM dedicata a Docker dalle impostazioni, su windows la situazione potrebbe essere diversa. 
-Raccomandazione: Fai una prova, se noti che il container va in crash durante l'esecuzione quando viene invocato a report_microservice, significa che devi aumentare la memoria RAM dedicata.
+- Su linux si può aumentare la memoria RAM dedicata a Docker dalle impostazioni, su windows la situazione potrebbe essere diversa. <br>
+**Raccomandazione**: Fai una prova, se noti che il container va in crash quando viene invocato da report_microservice, esegui subito dopo il seguente commando:<br>
+`docker inspect arrhythmia_microservice --format='{{.State.OOMKilled}}'` <br>
+Se restituisce *true*, significa che il container è stato ucciso per esaurimento di memoria quindi dovrai aumentare la RAM dedicata.
