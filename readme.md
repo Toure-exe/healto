@@ -10,21 +10,21 @@ Assicurati di aver installato:
 - Docker Compose
 - Node.js e npm
 
-## 🚀 Deployment del Backend
+## Deployment del Backend
 
 1. Posizionati nella cartella principale `healto`
 2. Scarica tutte le immagini da Docker Hub con: `docker-compose pull` 
-(⚠️ Nota: il microservizio arrhythmia_microservice è abbastanza pesante. Il download può richiedere 15-30 minuti, a seconda della connessione.)
+    (Nota: il microservizio arrhythmia_microservice è abbastanza pesante. Il download può richiedere 15-30 minuti, a seconda della connessione.)
 3. Avvia i container con: `docker-compose up`
 
-## 🚀 Avvio del frontend
+## Avvio del frontend
 
 1. Apri un nuovo terminale e vai nella cartella `healto_frontend`
 2. Avvia il frontend con:
 - `npm install`
 - `npm run dev`
 
-## ⚠️ Attenzione su arrhythmia_microservice
+## Attenzione su arrhythmia_microservice
 - Questo microservizio esegue una rete neurale abbastanza bisognosa dal punto di vista della RAM
 - Sono raccomandati almeno 8GB di RAM dedicati al container per funzionare bene
 - Se la RAM assegnata al container è insufficiente, quest'ultimo potrebbe venire chiuso automaticamente durante l’inferenza da Docker, causando errori HTTP.
