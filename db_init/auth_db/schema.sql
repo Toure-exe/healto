@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 27, 2025 alle 14:01
+-- Creato il: Lug 01, 2025 alle 04:22
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -36,14 +36,6 @@ CREATE TABLE `user` (
   `password` varchar(255) NOT NULL,
   `surname` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dump dei dati per la tabella `user`
---
-
-INSERT INTO `user` (`email`, `role`, `birth_date`, `fiscal_code`, `name`, `password`, `surname`) VALUES
-('joe.dalton@example.com', 'patient', '1990-10-10', 'CODFISC', 'Joe', '$2a$10$3v/bOhstNnV7.YoUGQp.RuhRXUIfJlbcgcX4HdkIwjWxuNc7kcbpW', 'Dalton'),
-('lucky.luke@example.com', 'doctor', '1997-04-22', 'CODFISC1', 'lucky', '$2a$10$3UvM0gY4ujpoYxgdevCAPO7XqijTm9J7.dx8Ux6.aBNNLWGWTPLYm', 'luke');
 
 --
 -- Indici per le tabelle scaricate

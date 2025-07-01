@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Creato il: Giu 27, 2025 alle 14:02
+-- Creato il: Lug 01, 2025 alle 04:23
 -- Versione del server: 10.4.32-MariaDB
 -- Versione PHP: 8.0.30
 
@@ -37,25 +37,6 @@ CREATE TABLE `booking` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dump dei dati per la tabella `booking`
---
-
-INSERT INTO `booking` (`booking_id`, `booking_date`, `booking_hour`, `doctor_email`, `patient_email`, `is_accepted_by_doctor`) VALUES
-(1, '2025-05-01', '10:00', 'mario.rossi@example.com', 'yuri.cechi@example.com', b'0'),
-(2, '2025-05-14', '13:00', 'mario.rossi@example.com', 'yuri.cechi@example.com', b'0'),
-(3, '2025-05-15', '10:00', 'mario.rossi@example.com', 'toure.isso@gmail.com', b'1'),
-(4, '2025-05-20', '10:00', 'mario.rossi@example.com', 'yuri.cechi@example.com', b'1'),
-(5, '2025-06-03', '12:00', 'mario.rossi@example.com', 'toure.isso@gmail.com', b'1'),
-(6, '2025-06-12', '10:00', 'mario.rossi@example.com', 'toure.isso@gmail.com', b'1'),
-(7, '2025-06-13', '08:00', 'mario.rossi@example.com', 'toure.isso@gmail.com', b'0'),
-(8, '2025-06-04', '11:00', 'mario.rossi@example.com', 'luigi.bianchi@example.com', b'1'),
-(9, '2025-06-09', '08:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'1'),
-(10, '2025-06-12', '10:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'0'),
-(11, '2025-06-11', '13:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'0'),
-(12, '2025-06-13', '08:00', 'lucky.luke@example.com', 'luigi.bianchi@example.com', b'1'),
-(13, '2025-06-26', '08:00', 'lucky.luke@example.com', 'yuri.cechi@example.com', b'0');
-
---
 -- Indici per le tabelle scaricate
 --
 
@@ -73,7 +54,7 @@ ALTER TABLE `booking`
 -- AUTO_INCREMENT per la tabella `booking`
 --
 ALTER TABLE `booking`
-  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `booking_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
